@@ -1,23 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useRef } from "react";
+import SearchBar from "./components/SearchBox";
+import ImagesBox from "./components/ImagesBox";
+import LoadMore from "./components/LoadMore";
+import { createApi } from "unsplash-js";
+
+const unsplash = createApi({
+  accessKey: "ws9D_zlOs4PHV9wVje4nv00gszOwUp3m3IZ_L26PwuA",
+});
 
 function App() {
+  const [images, setImages] = useState([]);
+  const [showMore, setShowMore] = useState(false);
+  const searchQuery = useRef();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="boxContainer">
+      <SearchBar
+        unsplash={unsplash}
+        searchQuery={searchQuery}
+        setImages={setImages}
+        setShowMore={setShowMore}
+      />
+      <ImagesBox images={images} />
+      <LoadMore
+        showMore={showMore}
+        unsplash={unsplash}
+        searchQuery={searchQuery}
+        setShowMore={setShowMore}
+        setImages={setImages}
+      />
     </div>
   );
 }

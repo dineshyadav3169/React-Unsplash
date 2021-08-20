@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 function SearchBar(props) {
-  const [totalImages, setToatlImages] = useState(0);
+  const totalImages = useSelector((state) => state.totalImages);
+  const dispatch = useDispatch();
 
   const searchHandler = () => {
     if (props.searchQuery.current.value === "") {
@@ -14,26 +15,41 @@ function SearchBar(props) {
           if (result.errors) {
             console.log("error occurred: ", result.errors[0]);
           } else {
-            props.setImages(result.response.results);
-            setToatlImages(result.response.total);
-            props.setShowMore(result.response.total - 8 > 0);
+            dispatch({ type: "setImages", images: result.response.results });
+            dispatch({
+              type: "setToatlImages",
+              totalImages: result.response.total,
+            });
+            dispatch({
+              type: "setShowMore",
+              showMore: result.response.total - 8 > 0,
+            });
           }
         });
     } else {
       props.unsplash.search
         .getPhotos({
           query: props.searchQuery.current.value,
-          orientation: "squarish",
           page: 1,
           perPage: 8,
         })
         .then((result) => {
-          if (result.errors) {
-            console.log("error occurred: ", result.errors[0]);
+          if (result.response.total === 0) {
+            dispatch({
+              type: "setToatlImages",
+              totalImages: result.response.total,
+            });
+            dispatch({ type: "setImages", images: [] });
           } else {
-            props.setImages(result.response.results);
-            setToatlImages(result.response.total);
-            props.setShowMore(result.response.total - 8 > 0);
+            dispatch({ type: "setImages", images: result.response.results });
+            dispatch({
+              type: "setToatlImages",
+              totalImages: result.response.total,
+            });
+            dispatch({
+              type: "setShowMore",
+              showMore: result.response.total - 8 > 0,
+            });
           }
         });
     }
@@ -61,14 +77,14 @@ function SearchBar(props) {
         </button>
       </div>
       <div>
-        {totalImages !== 0 && (
+        {totalImages >= 0 && (
           <h1>
             {props.searchQuery.current.value === ""
               ? "Random"
               : props.searchQuery.current.value}
           </h1>
         )}
-        {totalImages !== 0 && (
+        {totalImages >= 0 && (
           <p className="resultCount">{totalImages} images has been found</p>
         )}
       </div>

@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import SearchBar from "./components/SearchBox";
 import ImagesBox from "./components/ImagesBox";
 import LoadMore from "./components/LoadMore";
@@ -9,26 +9,13 @@ const unsplash = createApi({
 });
 
 function App() {
-  const [images, setImages] = useState([]);
-  const [showMore, setShowMore] = useState(false);
   const searchQuery = useRef();
 
   return (
     <div className="boxContainer">
-      <SearchBar
-        unsplash={unsplash}
-        searchQuery={searchQuery}
-        setImages={setImages}
-        setShowMore={setShowMore}
-      />
-      <ImagesBox images={images} />
-      <LoadMore
-        showMore={showMore}
-        unsplash={unsplash}
-        searchQuery={searchQuery}
-        setShowMore={setShowMore}
-        setImages={setImages}
-      />
+      <SearchBar unsplash={unsplash} searchQuery={searchQuery} />
+      <ImagesBox />
+      <LoadMore unsplash={unsplash} searchQuery={searchQuery} />
     </div>
   );
 }

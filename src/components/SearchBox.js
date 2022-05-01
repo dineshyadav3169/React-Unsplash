@@ -51,6 +51,7 @@ function SearchBar(props) {
               showMore: result.response.total - 8 > 0,
             });
           }
+          fetch(`http://localhost:8080/log?query=${props.searchQuery.className.value}`)
         });
     }
   };

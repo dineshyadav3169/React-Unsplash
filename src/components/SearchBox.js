@@ -51,7 +51,7 @@ function SearchBar(props) {
               showMore: result.response.total - 8 > 0,
             });
           }
-          fetch(`http://localhost:8080/log?searchQuery=${props.searchQuery.current.value}`)
+          fetch(`https://image-search-backend.kumardinesh.repl.co/log?searchQuery=${props.searchQuery.current.value}`)
         });
     }
   };

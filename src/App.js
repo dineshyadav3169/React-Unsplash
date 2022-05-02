@@ -5,7 +5,7 @@ import LoadMore from "./components/LoadMore";
 import { createApi } from "unsplash-js";
 
 const unsplash = createApi({
-  accessKey: process.env.UNSPLASH_ACCESS_KEY,
+  accessKey: "ws9D_zlOs4PHV9wVje4nv00gszOwUp3m3IZ_L26PwuA",
 });
 
 function App() {

@@ -3,7 +3,7 @@ const {MongoClient} = require('mongodb')
 const app = express()
 const port = 8080
 
-const uri = "mongodb+srv://<username>:<password>@<your-cluster-url>";
+const uri = "mongodb+srv://wt-test-now:d780eeed-9662-4cba-9b5d-b455e782aa89@imagesearch.4smay.mongodb.net/imagesearch?retryWrites=true&w=majority";
 const client = new MongoClient(uri);
 
 app.get('/log', async (req, res) => {
@@ -21,3 +21,17 @@ app.get('/log', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
 })
+
+
+/* 
+
+const { MongoClient, ServerApiVersion } = require('mongodb');
+const uri = "mongodb+srv://wt-test-now:<password>@cluster0.4smay.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
+client.connect(err => {
+  const collection = client.db("test").collection("devices");
+  // perform actions on the collection object
+  client.close();
+});
+
+*/
